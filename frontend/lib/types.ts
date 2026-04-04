@@ -113,6 +113,97 @@ export interface DeepAnalysis {
   analyzedAt: string;
 }
 
+// ─── Multi-Agent Pipeline (3-agent + ArmorIQ) ───────────────────────────────
+
+export interface Agent1Result {
+  asset: string;
+  relevanceScore: number;
+  tweetType: 'news' | 'opinion' | 'hype' | 'fear' | 'spam';
+  sentimentScore: number;
+  matchedKeywords: string[];
+  confidence: number;
+}
+
+export interface Agent2Result {
+  sarcasmDetected: boolean;
+  ironyDetected: boolean;
+  pumpAndDumpSignals: boolean;
+  misleadingSignals: string[];
+  emotionalManipulation: boolean;
+  riskFlags: string[];
+  adjustedConfidence: number;
+  riskLevel: 'LOW' | 'MEDIUM' | 'HIGH' | 'UNKNOWN';
+}
+
+export interface Agent3Result {
+  summary: string;
+  reasoning: string;
+  keySignals: string[];
+  recommendation: string;
+}
+
+export interface ArmorIQAuditEntry {
+  action: string;
+  result: 'allowed' | 'blocked' | 'bypassed';
+  timestamp: string;
+}
+
+export interface ArmorIQPolicyDecision {
+  agentName: string;
+  decision: 'allowed' | 'blocked' | 'skipped';
+  reason: string;
+  timestamp: string;
+}
+
+export interface ArmorIQAgentAuditEntry {
+  agentName: string;
+  tokenId: string | null;
+  tokenValid: boolean;
+  startedAt: string;
+  completedAt: string | null;
+  outcome: 'success' | 'fallback' | 'blocked';
+}
+
+export interface ArmorIQSecurity {
+  executionVerified: boolean;
+  verified: boolean;
+  planId?: string;
+  intentTokenId?: string;
+  planValidated: boolean;
+  outputVerified: boolean;
+  circuitOpen: boolean;
+  degraded: boolean;
+  degradedReason?: string;
+  reasoningScore: number;
+  hallucination: boolean;
+  consistencyFlags: string[];
+  confidenceLevel: 'high' | 'medium' | 'low';
+  auditTrail: ArmorIQAuditEntry[];
+  policyDecisions: ArmorIQPolicyDecision[];
+  agentAuditEntries: ArmorIQAgentAuditEntry[];
+  agentTokenIds: Record<string, string>;
+}
+
+export interface MultiAgentAnalysis {
+  postId: string;
+  summary: string;
+  sentiment: 'BULLISH' | 'BEARISH' | 'NEUTRAL';
+  reasoning: string;
+  keyThemes: string[];
+  riskLevel: 'LOW' | 'MEDIUM' | 'HIGH' | 'UNKNOWN';
+  recommendation: string;
+  analyzedAt: string;
+  confidenceScore: number;
+  sentimentScore: number;
+  pipelineStatus: 'full' | 'partial' | 'mock';
+  agentTrace: {
+    agent1: Agent1Result;
+    agent2: Agent2Result;
+    agent3: Agent3Result;
+  };
+  security: ArmorIQSecurity;
+}
+
 export interface AuthResponse {
   accessToken: string;
   user?: User;
@@ -184,6 +275,61 @@ export interface AgentsResponse {
     isLive: boolean;
     note: string;
   };
+}
+
+// ─── Zerodha / Kite ─────────────────────────────────────────────────────────
+
+export interface KiteHolding {
+  tradingsymbol: string;
+  exchange: string;
+  isin: string;
+  product: string;
+  quantity: number;
+  averagePrice: number;
+  lastPrice: number;
+  closePrice: number;
+  pnl: number;
+  dayChange: number;
+  dayChangePct: number;
+  currentValue: number;
+  investedValue: number;
+}
+
+export interface KitePortfolioSummary {
+  totalInvested: number;
+  currentValue: number;
+  totalPnL: number;
+  totalPnLPct: number;
+  dayPnL: number;
+  holdingCount: number;
+  availableCash: number;
+  holdings: KiteHolding[];
+}
+
+export interface KiteFunds {
+  equity: { net: number; available: number; usedMargin: number };
+  commodity: { net: number; available: number; usedMargin: number };
+}
+
+export interface KitePosition {
+  tradingsymbol: string;
+  exchange: string;
+  product: string;
+  quantity: number;
+  averagePrice: number;
+  lastPrice: number;
+  pnl: number;
+  side: 'BUY' | 'SELL' | 'NONE';
+}
+
+export interface PlaceOrderPayload {
+  tradingsymbol: string;
+  exchange: 'NSE' | 'BSE';
+  side: 'BUY' | 'SELL';
+  quantity: number;
+  orderType: 'MARKET' | 'LIMIT';
+  price?: number;
+  postId?: string;
 }
 
 export interface GeneratedStrategy {

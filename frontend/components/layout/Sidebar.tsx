@@ -12,6 +12,7 @@ import {
   Bot,
   UserCog,
   Sparkles,
+  Briefcase,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -35,6 +36,11 @@ const navItems = [
     label: 'Alerts',
     href: '/dashboard/alerts',
     icon: Bell,
+  },
+  {
+    label: 'Portfolio',
+    href: '/dashboard/portfolio',
+    icon: Briefcase,
   },
 ];
 
@@ -81,7 +87,10 @@ export const Sidebar = () => {
 
   const renderLink = (item: { label: string; href: string; icon: any; badge?: string }) => {
     const Icon = item.icon;
-    const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+    const isActive =
+      item.href === '/dashboard'
+        ? pathname === '/dashboard'
+        : pathname === item.href || pathname.startsWith(item.href + '/');
 
     return (
       <Link

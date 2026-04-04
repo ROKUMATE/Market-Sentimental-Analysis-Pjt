@@ -173,28 +173,6 @@ No waiting. No noise. Just signal.
 
 ---
 
-## 🛠️ Development
-
-### Run tests
-```bash
-npm run test
-npm run test:e2e
-```
-
-### Linting
-```bash
-npm run lint
-npm run format
-```
-
-### Database
-```bash
-npx prisma studio        # Visual DB explorer
-npx prisma migrate dev   # Run pending migrations
-```
-
----
-
 ## 📦 Tech Stack
 
 | Layer | Tech |
@@ -229,12 +207,6 @@ npx prisma migrate dev   # Run pending migrations
 3. Commit your changes (`git commit -m 'Add your idea'`)
 4. Push to the branch (`git push origin feature/your-idea`)
 5. Open a Pull Request
-
----
-
-## 📄 License
-
-MIT
 
 ---
 

@@ -1,4 +1,4 @@
-# 📊 Market Sentiment Intelligence
+# 📊 Market Sentiment Intelligence - GnosisAlpha
 
 **Real-time social sentiment tracking for traders. Because what people say on Twitter matters.**
 
